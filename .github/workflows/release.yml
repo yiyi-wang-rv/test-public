@@ -15,6 +15,8 @@ jobs:
           fetch-depth: 0
       - name: "Deploy"
         working-directory: gh-pages
+        env:
+          TOKEN: ${{ secrets.TOKEN }}
         run: |
           # Push orphan branch to gh-pages
           git config --global user.name "Yiyi Wang"
@@ -24,7 +26,7 @@ jobs:
           git commit -m "Deploy to GitHub Pages"
 
           git remote -v
-          git remote set-url origin https://yiyi-wang-rv:${{ secrets.TOKEN }}@github.com/${{ github.repository }}.git
+          git remote set-url origin https://yiyi-wang-rv:${TOKEN}@github.com/${{ github.repository }}.git
           git remote -v
 
           git push --force --set-upstream origin gh-pages

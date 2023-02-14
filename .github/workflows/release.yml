@@ -26,7 +26,7 @@ jobs:
           git commit -m "Deploy to GitHub Pages"
 
           git remote -v
-          git remote set-url origin https://yiyi-wang-rv:${TOKEN}@github.com/${{ github.repository }}
+          git remote set-url origin https://${TOKEN}@github.com/${{ github.repository }}
           git remote -v
 
           git push --force --set-upstream origin gh-pages

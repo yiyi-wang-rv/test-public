@@ -24,6 +24,8 @@ jobs:
         working-directory: gh-pages
         run: |
           # Push orphan branch to gh-pages
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git checkout --orphan gh-pages
           git add .
           git commit -m "Deploy to GitHub Pages"

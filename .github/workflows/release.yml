@@ -24,9 +24,4 @@ jobs:
           git checkout --orphan gh-pages origin/main
           git add .
           git commit -m "Deploy to GitHub Pages"
-
-          git remote -v
-          git remote set-url origin https://${TOKEN}@github.com/${{ github.repository }}
-          git remote -v
-
           git push --force origin gh-pages

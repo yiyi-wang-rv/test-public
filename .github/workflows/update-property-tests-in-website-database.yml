@@ -1,0 +1,25 @@
+name: Update property tests in website database
+on:
+  push:
+    branches:
+      - master
+      - develop
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  update_property_tests:
+    name: Update property tests in website database
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call GraphQL mutation to update property tests
+        env:
+          GRAPHQL_BEARER_TOKEN: ${{ secrets.GRAPHQL_BEARER_TOKEN }}
+        run: |
+          curl -X POST https://ercx.runtimeverification.com/graphql \
+              -H "Authorization: Bearer $GRAPHQL_BEARER_TOKEN"      \
+              -H 'Content-Type: application/json'                   \
+              -d '{"query":"mutation { refreshPropertyTests { name } }"}'
+
+

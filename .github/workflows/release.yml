@@ -1,0 +1,27 @@
+name: "Release"
+on:
+  push:
+    branches:
+      - main
+jobs:
+  gh-pages:
+    name: "GitHub Pages deployment"
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout code and set up web build"
+        uses: actions/checkout@v3
+        with:
+          path: gh-pages
+          fetch-depth: 0
+      - name: "Deploy"
+        working-directory: gh-pages
+        env:
+          TOKEN: ${{ secrets.TOKEN }}
+        run: |
+          # Push orphan branch to gh-pages
+          git config --global user.name "Yiyi Wang"
+          git config --global user.email "yiyi.wang@runtimeverification.com"
+          git checkout --orphan gh-pages origin/main
+          git add .
+          git commit -m "Deploy to GitHub Pages"
+          git push --force origin gh-pages

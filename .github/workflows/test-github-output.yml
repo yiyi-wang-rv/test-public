@@ -3,29 +3,11 @@ on:
   push:
     branches:
       - develop
+      - main
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    outputs:
-      DATABASE_URL: ${{ steps.process-outputs.outputs.DATABASE_URL }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Set up DATABASE_URL for `develop` branch
-        if: github.ref == 'refs/heads/develop'
-        run: |
-          echo DATABASE_URL="postgresql://xxx:xxx@xxx/postgres?schema=develop&connection_limit=40&pool_timeout=30" >> $GITHUB_ENV
-      - id: process-outputs
-        name: Process Outputs
-        run: |
-          echo "DATABASE_URL='${{ env.DATABASE_URL }}'" >> $GITHUB_OUTPUT
-
-          echo "Print GITHUB_OUTPUT"
-          cat $GITHUB_OUTPUT
   print:
-    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Print DATABASE_URL
-        run: echo "DATABASE_URL=${{ needs.build.outputs.DATABASE_URL }}"
+        run: echo DATABASE_URL=postgresql://xxx:xxx@xxx/postgres?schema=${{ (github.ref == 'refs/heads/master' && 'public') || 'develop' }}&connection_limit=40&pool_timeout=30

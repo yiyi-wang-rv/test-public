@@ -19,7 +19,7 @@ jobs:
       - id: process-outputs
         name: Process Outputs
         run: |
-          echo "DATABASE_URL=${{ env.DATABASE_URL }}" >> $GITHUB_OUTPUT
+          echo "DATABASE_URL='${{ env.DATABASE_URL }}'" >> $GITHUB_OUTPUT
 
           echo "Print GITHUB_OUTPUT"
           cat $GITHUB_OUTPUT

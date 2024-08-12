@@ -1,0 +1,15 @@
+name: "Test GITHUB_OUTPUT"
+on:
+  push:
+    branches:
+      - develop
+      - main
+
+jobs:
+  print:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print DATABASE_URL
+        run: |
+          echo ref: ${{ github.ref }}
+          echo DATABASE_URL=postgresql://xxx:xxx@xxx/postgres?schema=${{ (github.ref == 'refs/heads/main' && 'public') || 'develop' }}&connection_limit=40&pool_timeout=30
